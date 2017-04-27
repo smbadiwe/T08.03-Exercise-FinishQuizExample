@@ -39,6 +39,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 
     private static final String TAG = GreenAdapter.class.getSimpleName();
 
+    private static int viewHolderCount;
     private int mNumberItems;
 
     /**
@@ -70,8 +71,19 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
+
         NumberViewHolder viewHolder = new NumberViewHolder(view);
 
+        // COMPLETED (12) Set the text of viewHolderIndex to "ViewHolder index: " + viewHolderCount
+        viewHolder.viewHolderIndex.setText("ViewHolder index: " + viewHolderCount);
+
+        // COMPLETED (13) Use ColorUtils.getViewHolderBackgroundColorFromInstance and pass in a Context and the viewHolderCount
+        int backgroundColorForViewHolder = ColorUtils
+                .getViewHolderBackgroundColorFromInstance(context, viewHolderCount);
+        // COMPLETED (14) Set the background color of viewHolder.itemView with the color from above
+        viewHolder.itemView.setBackgroundColor(backgroundColorForViewHolder);
+
+        viewHolderCount++;
         return viewHolder;
     }
 
@@ -110,6 +122,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
         // Will display the position in the list, ie 0 through getItemCount() - 1
         TextView listItemNumberView;
 
+        TextView viewHolderIndex;
         /**
          * Constructor for our ViewHolder. Within this constructor, we get a reference to our
          * TextViews and set an onClickListener to listen for clicks. Those will be handled in the
@@ -121,6 +134,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
             super(itemView);
 
             listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
+            viewHolderIndex = (TextView) itemView.findViewById(R.id.tv_view_holder_instance);
         }
 
         /**
